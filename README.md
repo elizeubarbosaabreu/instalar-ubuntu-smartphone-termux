@@ -105,7 +105,7 @@ Você pode usar os comandos (no terminal do ubuntu) ```sudo apt install <nome do
 ### Antes de instalar qualquer software atualize o sistema com os comandos abaixo:
 
 ```
-sudo apt update && sudo apt upgrate -y
+sudo apt update && sudo apt upgrade -y
 ```
 
 
