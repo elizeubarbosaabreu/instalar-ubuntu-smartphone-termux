@@ -1,6 +1,6 @@
 # Instalação do UBUNTU 20 no Android com TERMUX
 
-Esse repositório é um fork do repositório [https://github.com/tuanpham-dev/termux-ubuntu](https://github.com/tuanpham-dev/termux-ubuntu). O único trabalho que tive foi traduzí-lo e indicar alguns temas que considero interessantes.
+Esse repositório é um fork do repositório [tuanpham-dev](https://github.com/tuanpham-dev/termux-ubuntu). O único trabalho que tive foi traduzí-lo e indicar alguns temas que considero interessantes.
 
 Todos os Scripts de instalação são originalmente obtidos de [AndronixApp](https://github.com/AndronixApp/termux-packages) e apenas receberam algumas modificações para serem colados diretamente no terminal do [Termux](https://termux.dev/en/) em seu Smartphone.
 
