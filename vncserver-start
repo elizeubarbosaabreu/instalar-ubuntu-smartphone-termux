@@ -6,14 +6,14 @@ WIDTH=0
 CHOICE_HEIGHT=5
 BACKTITLE="AndroNix vncserver resolution selection"
 TITLE="vncserver-start"
-MENU="Choose one of the following options:"
+MENU="Escolha uma das seguintes resolucoes:"
 export PORT=1
 
-OPTIONS=(1 "Start vncserver with autodetect/dynamic resolution"
-	2 "Start vncserver with QHD resolution"
-	3 "Start vncserver with FHD resolution"
-	4 "Start vncserver with HD-ready resolution"
-	5 "Start vncserver with custom resolution and port")
+OPTIONS=(1 "Iniciar vncserver com resolucao automatica/dinamica"
+	2 "Iniciar vncserver com resolucao QHD"
+	3 "Iniciar vncserver com resolucao FHD"
+	4 "Iniciar vncserver com resolucao HD-ready"
+	5 "Iniciar vncserver com resolucao e portas customizadas")
 
 CHOICE=$(dialog --clear \
 	--backtitle "$BACKTITLE" \
@@ -26,26 +26,26 @@ CHOICE=$(dialog --clear \
 clear
 case $CHOICE in
 	1)
-		echo "You chose dynamic resolution"
+		echo "Resolucao automatica/dinamica selecionada"
 		GEO="" vnc
 		;;
 	2)
-		echo "You chose QHD resolution"
+		echo "Resolucao QHD Selecionada"
 		GEO="-geometry 2560x1440" vnc
 		;;
 	3)
-		echo "You chose Full HD resolution"
+		echo "Resolucao FHD Selecionada"
 		GEO="-geometry 1920x1080" vnc
 		;;
 	4)
-		echo "You chose HD-ready resolution"
+		echo "Resolucao HD-ready selecionada"
 		GEO="-geometry 1280x720" vnc
 		;;
 	5)
-		echo "You chose to manually provide a resolution/port"
-		echo "Input your custom resolution in format WIDTHxHEIGHT i.e 1920x1200"
+		echo "Escolha uma resolucao/porta"
+		echo "Digite uma resolucao no formato LARGURAxALTURA da tela. Exemplo 1920x1200"
 		read custom
-		echo "Input your custom port i.e 2"
+		echo "Digite uma porta. Exemplo 2"
 		read port
 		GEO="-geometry $custom" PORT=$port vnc 
 		;;

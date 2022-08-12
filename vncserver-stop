@@ -1,11 +1,11 @@
 #!/bin/bash
 
 USER=$(whoami)
-echo "Killing VNC Server"
-echo -n "Enter port number which you want to kill (Example: 3): "
+echo "Encerrando VNC Server"
+echo -n "Qual porta do sistema a conexao estava usando e vc deseja fechar (Exemplo: 3): "
 read pt
 echo " "
-echo "Killing port $pt"
+echo "Encerrando a porta $pt"
 vncserver -kill :$pt
 rm -rf /tmp/.X$pt-lock
 rm -rf /tmp/.X11-unix/X$pt

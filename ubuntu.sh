@@ -6,7 +6,7 @@ folder=ubuntu20-fs
 dlink="https://raw.githubusercontent.com/AndronixApp/AndronixOrigin/master/APT"
 if [ -d "$folder" ]; then
 	first=1
-	echo "skipping downloading"
+	echo "Pulando o download..."
 fi
 tarball="ubuntu20-rootfs.tar.gz"
 
@@ -14,7 +14,7 @@ termux-setup-storage
 
 if [ "$first" != 1 ];then
 	if [ ! -f $tarball ]; then
-		echo "Download Rootfs, this may take a while base on your internet speed."
+		echo "Baixando Rootfs, isso demora um pouco dependendo da velocidade de seu provedor de internet."
 		case `dpkg --print-architecture` in
 		aarch64)
 			archurl="arm64" ;;
@@ -25,7 +25,7 @@ if [ "$first" != 1 ];then
 		x86_64)
 			archurl="amd64" ;;
 		*)
-			echo "unknown architecture"; exit 1 ;;
+			echo "Arquitetura de sistema imcompativel"; exit 1 ;;
 		esac
 		wget "https://github.com/AndronixApp/AndronixOrigin/raw/master/Rootfs/Ubuntu20/focal-${archurl}.tar.gz" -O $tarball
 
@@ -34,7 +34,7 @@ if [ "$first" != 1 ];then
 	cur=`pwd`
 	mkdir -p "$folder"
 	cd "$folder"
-	echo "Decompressing Rootfs, please be patient."
+	echo "Descompactando Rootfs, muita calma nessa hora."
 	proot --link2symlink tar -xf ${cur}/${tarball} --exclude=dev||:
 	cd "$cur"
 fi
@@ -179,7 +179,7 @@ if [ ! -f "${cur}/${folder}/proc/fakethings/vmstat" ]; then
 fi
 
 bin=start-ubuntu20.sh
-echo "writing launch script"
+echo "Gerando script de inicio..."
 cat > $bin <<- EOM
 #!/bin/bash
 cd \$(dirname \$0)
@@ -236,23 +236,23 @@ rm -rf ubuntu20-fs/usr/local/bin/*
 
 echo "127.0.0.1 localhost" > $folder/etc/hosts
 echo "Set disable_coredump false" > $folder/etc/sudo.conf
-wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.bash_profile -O ubuntu20-fs/root/.bash_profile > /dev/null
-wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/vnc -P ubuntu20-fs/usr/local/bin > /dev/null
-wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/vncpasswd -P ubuntu20-fs/usr/local/bin > /dev/null
-wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/vncserver-stop -P ubuntu20-fs/usr/local/bin > /dev/null
-wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/vncserver-start -P ubuntu20-fs/usr/local/bin > /dev/null
+wget -q https://raw.githubusercontent.com/elizeubarbosaabreu/instalar-ubuntu-smartphone-termux/master/.bash_profile -O ubuntu20-fs/root/.bash_profile > /dev/null
+wget -q https://raw.githubusercontent.com/elizeubarbosaabreu/instalar-ubuntu-smartphone-termux/master/vnc -P ubuntu20-fs/usr/local/bin > /dev/null
+wget -q https://raw.githubusercontent.com/elizeubarbosaabreu/instalar-ubuntu-smartphone-termux/master/vncpasswd -P ubuntu20-fs/usr/local/bin > /dev/null
+wget -q https://raw.githubusercontent.com/elizeubarbosaabreu/instalar-ubuntu-smartphone-termux/master/vncserver-stop -P ubuntu20-fs/usr/local/bin > /dev/null
+wget -q https://raw.githubusercontent.com/elizeubarbosaabreu/instalar-ubuntu-smartphone-termux/master/vncserver-start -P ubuntu20-fs/usr/local/bin > /dev/null
 
-wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/firstrun -P ubuntu20-fs/usr/share/andronix > /dev/null
+wget -q https://raw.githubusercontent.com/elizeubarbosaabreu/instalar-ubuntu-smartphone-termux/master/firstrun -P ubuntu20-fs/usr/share/andronix > /dev/null
 
 mkdir -p ubuntu20-fs/usr/share/andronix
 case "$1" in
 	"nde")
 		;;
   "lxde")
-		wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/de-lxde -O ubuntu20-fs/usr/share/andronix/de-install > /dev/null
+		wget -q https://raw.githubusercontent.com/elizeubarbosaabreu/instalar-ubuntu-smartphone-termux/master/de-lxde -O ubuntu20-fs/usr/share/andronix/de-install > /dev/null
     ;;
 	*)
-		wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/de-xfce -O ubuntu20-fs/usr/share/andronix/de-install > /dev/null
+		wget -q https://raw.githubusercontent.com/elizeubarbosaabreu/instalar-ubuntu-smartphone-termux/master/de-xfce -O ubuntu20-fs/usr/share/andronix/de-install > /dev/null
 		;;
 esac
 
@@ -267,7 +267,7 @@ echo "fixing shebang of $bin"
 termux-fix-shebang $bin
 echo "making $bin executable"
 chmod +x $bin
-echo "removing image for some space"
+echo "Removendo imagem de instalacao... Liberando espaco..."
 rm $tarball
 
 bash $bin

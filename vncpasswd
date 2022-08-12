@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -sp 'Provide a new VNC password: ' PASSWORD
+read -sp 'Digite uma nova senha para o servidor VNC: ' PASSWORD
 /usr/bin/vncpasswd -f <<<"$PASSWORD"$'\n'"$PASSWORD" > $HOME/.vnc/passwd
 echo ""
-echo "Password for VNC changed"
+echo "Senha de VNC configurada com sucesso..."

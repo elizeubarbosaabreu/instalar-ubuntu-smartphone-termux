@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "Removing distribution provided chromium packages and dependencies..."
+echo "Removendo chromium e dependencias..."
 apt purge chromium* chromium-browser* snapd -y -qq && apt autoremove -y -qq
 sudo apt purge chromium* chromium-browser* -y -qq && apt autoremove -y -qq
 apt update -qq; apt install software-properties-common gnupg --no-install-recommends -y -qq
-echo "Adding Debian repo for Chromium installation"
+echo "Adicionando uma versao valida e propria para esta versao debian"
 
 echo "deb http://ftp.debian.org/debian buster main
 deb http://ftp.debian.org/debian buster-updates main" >> /etc/apt/sources.list

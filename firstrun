@@ -30,7 +30,7 @@ show_spinner() {
     sleep "${delay}"
     printf "\b\b\b\b\b\b"
   done
-  printf "Done!  \b\b\b\b"
+  printf "Pronto!  \b\b\b\b"
   echo ""
 }
 
@@ -43,21 +43,21 @@ create_oem_install() {
   msg "Setting root password..."
   passwd root < $TMPDIR/rootpassword 1> /dev/null 2>&1
   /usr/local/bin/vncpasswd -f <<<"$ROOTPASSWORD"$'\n'"$ROOTPASSWORD" > /root/.vnc/passwd 
-  msg "Adding user $USER..."
+  msg "Adicionando $USER..."
   echo "" > $TMPDIR/status
   useradd -m -G sudo -s /bin/bash -U $(cat $TMPDIR/user) 1> /dev/null 2>&1 && echo "done" > $TMPDIR/status &
   show_spinner
-  msg "Setting full name to $FULLNAME..."
+  msg "Configurando nome completo $FULLNAME..."
   chfn -f "$FULLNAME" $(cat $TMPDIR/user) 1> /dev/null 2>&1
-  msg "Setting password for $USER..."
+  msg "Configurando senha para $USER..."
   mkdir -p /home/$USER/.vnc
   passwd $(cat $TMPDIR/user) < $TMPDIR/password 1> /dev/null 2>&1
   /usr/local/bin/vncpasswd -f <<<"$PASSWORD"$'\n'"$PASSWORD" > /home/$USER/.vnc/passwd 
   sed -i "/^root/a $USER ALL=(ALL) ALL" /etc/sudoers
-  msg "Applying system settings..."
+  msg "Configurando o sistema..."
   systemctl disable systemd-resolved.service 1> /dev/null 2>&1
   
-  msg "Cleaning install for unwanted files..."
+  msg "Limpando arquivos não utilizados..."
   rm -rf /var/log/*
   
   # Remove temp files on host
@@ -67,14 +67,14 @@ create_oem_install() {
 
 # Using Dialog to ask for user input for variables
 USER=$(dialog --clear --title "Finish Andronix Install" \
-	--inputbox "Enter username:
-(Usernames can only be lower case)" 8 50 \
+	--inputbox "Digite seu primeiro nome:
+(Use somente letras minusculas)" 8 50 \
   3>&1 1>&2 2>&3 3>&-)
 
 if [ ! -z "$USER" ]
 then
 FULLNAME=$(dialog --clear --title "Finish Andronix Install" \
-  --inputbox "Enter Full Name for $USER:" 8 50 \
+  --inputbox "Digite o nome completo de $USER:" 8 50 \
   3>&1 1>&2 2>&3 3>&- \
 	)
 fi
@@ -83,11 +83,11 @@ if [ ! -z "$FULLNAME" ]
 then
 PASSWORD=$(dialog --clear --title "Finish Andronix Install" \
   --insecure \
-  --passwordbox "Enter Password for $USER (at least 6 characters):" 8 50 \
+  --passwordbox "Digite uma senha para $USER (at least 6 characters):" 8 50 \
   3>&1 1>&2 2>&3 3>&- )
 else 
 	clear
-	msg "Configuration aborted. Restarting OEM script..."
+	msg "Procedimento encerrado. Tente de novo..."
 	sleep 5 && exec bash /usr/share/andronix/firstrun
 	#exit 1
 fi
@@ -100,7 +100,7 @@ stat=1
 		stat=$?
 	else 
 		clear
-		msg "Password does not match minimum lenght of 6 characters. Restarting OEM script..."
+		msg "Senha deve ter pelo menos 6 caracteres. Tente de novo..."
 		sleep 5 && exec bash /usr/share/andronix/firstrun
 	fi
 fi
@@ -108,19 +108,19 @@ fi
 if [ ! -z "$PASSWORD" ]
 then
 CONFIRMPASSWORD=$(dialog --clear --title "Andronix Installer" \
-	--insecure --passwordbox "Confirm Password for $USER:" 8 50 \
+	--insecure --passwordbox "Confirme a senha de $USER:" 8 50 \
   3>&1 1>&2 2>&3 3>&- \
 	)
 else 
 	clear
-	msg "Configuration aborted. Restarting OEM script..."
+	msg "Procedimento encerrado. Tente de novo..."
 	sleep 5 && exec bash /usr/share/andronix/firstrun
 	#exit 1
 fi
 
 if [[ "$PASSWORD" != "$CONFIRMPASSWORD" ]]; then
   clear
-  msg "User passwords do not match! Restarting OEM script..."
+  msg "Senhas digitadas diferentes. Tente novamente..."
   sleep 5 && exec bash /usr/share/andronix/firstrun
   #exit 1
 fi
@@ -129,12 +129,12 @@ if [ ! -z "$CONFIRMPASSWORD" ]
 then
 ROOTPASSWORD=$(dialog --clear --title "Finish Andronix Install" \
   --insecure \
-  --passwordbox "Enter Root Password (at least 6 characters):" 8 50 \
+  --passwordbox "Digite uma senha para o admin ROOT (minimo 6 caracteres):" 8 50 \
   3>&1 1>&2 2>&3 3>&- \
 	)
 else 
 	clear
-	msg "Configuration aborted. Restarting OEM script..."
+	msg "Procedimento encerrado. Tente de novo..."
 	sleep 5 && exec bash /usr/share/andronix/firstrun
 	#exit 1
 fi
@@ -147,7 +147,7 @@ stat=1
 		stat=$?
 	else 
 		clear
-		msg "Password does not match minimum lenght of 6 characters. Restarting OEM script..."
+		msg "Senha deve ter pelo menos 6 caracteres. Tente de novo..."
 		sleep 5 && exec bash /usr/share/andronix/firstrun
 	fi
 fi
@@ -155,19 +155,19 @@ fi
 if [ ! -z "$ROOTPASSWORD" ]
 then
 CONFIRMROOTPASSWORD=$(dialog --clear --title "Andronix Installer" \
-	--insecure --passwordbox "Confirm Root Password:" 8 50 \
+	--insecure --passwordbox "Confirme a senha do admin ROOT:" 8 50 \
   3>&1 1>&2 2>&3 3>&- \
 	)
 else 
 	clear
-	msg "Configuration aborted. Restarting OEM script..."
+	msg "Senha deve ter pelo menos 6 caracteres. Tente de novo..."
 	sleep 5 && exec bash /usr/share/andronix/firstrun
 	#exit 1
 fi
 
 if [[ "$ROOTPASSWORD" != "$CONFIRMROOTPASSWORD" ]]; then
   clear
-  msg "Root passwords do not match! Restarting OEM script..."
+  msg "Senhas diferente. Tente de novo..."
   sleep 5 && exec bash /usr/share/andronix/firstrun
   #exit 1
 fi
@@ -175,15 +175,15 @@ fi
 if [ ! -z "$CONFIRMROOTPASSWORD" ]
 then
 dialog --clear --title "Finish Andronix Install" \
-  --yesno "Is the below information correct:
-  Username = $USER
-  Full Name for $USER = $FULLNAME
-  Password for $USER = $PASSWORD
-  Password for root = $ROOTPASSWORD" 20 50 \
+  --yesno "Confira suas informacoes:
+  Nome = $USER
+  Nome completo de $USER = $FULLNAME
+  Senha de $USER = $PASSWORD
+  Senha do admin ROOT = $ROOTPASSWORD" 20 50 \
   3>&1 1>&2 2>&3 3>&-
 else
   clear
-  msg "Configuration aborted. Restarting OEM script..."
+  msg "Senha deve ter pelo menos 6 caracteres. Tente de novo..."
   sleep 5 && exec bash /usr/share/andronix/firstrun
   #exit 1
 fi
@@ -197,7 +197,7 @@ esac
 
 create_oem_install
 
-msg "Configuration complete. Cleaning up..."
+msg "Tudo certo. Fazendo limpeza dos instaladores..."
 # Here we export the DISPLAY variable for all know users 
 echo "export DISPLAY=:1" >> /root/.bashrc && echo "export DISPLAY=:1" >> /home/$USER/.profile
 touch /home/$USER/.hushlogin
@@ -209,7 +209,7 @@ if [ -e /etc/ssh/sshd_config ]
 then
 	sed -i s/"PermitRootLogin yes"/"#PermitRootLogin prohibit-password"/g /etc/ssh/sshd_config
 fi
-msg "You can start using your newly installed Andronix Modded OS..."
+msg "Voce pode iniciar o seu sistema operacional Andronix..."
 
 if [ -f /usr/share/andronix/de-install ]; then
   chmod +x /usr/share/andronix/de-install
