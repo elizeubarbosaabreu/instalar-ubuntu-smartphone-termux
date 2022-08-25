@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Configura dns padrao para 8.8.8.8 (Public DNS of Google)
 echo "#!/bin/bash
 rm -rf /etc/resolv.conf
 echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
