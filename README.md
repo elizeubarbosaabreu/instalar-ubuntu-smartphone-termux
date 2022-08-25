@@ -79,8 +79,14 @@ Abaixo indico alguns VNC Cliente para você usa em seu Smartphone:
 - [MultiVNC](https://github.com/bk138/multivnc)
 
 ## ISSUES
+### Problema com o pulseaudio (sem som)
 
-### Group Issue
+Instale o pavucontrol para que o sistema tenha som:
+```
+sudo apt install pavucontrol -y
+```
+
+### Erro de grupos
 
 Se aparece mensagem como as que estão abaixo no termux quando iniciar o ubuntu:
 
