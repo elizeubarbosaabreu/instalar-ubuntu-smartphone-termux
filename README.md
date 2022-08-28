@@ -133,9 +133,9 @@ sudo apt install firefox-esr
 
 ### Instale softwares adicionais (opcional):
 
-
+Para instalar alguns softwares adicionais (inclusive o pi-apps que funciona como um store de softwares) rode o comando abaixo:
 ```
-sudo apt install retext keepassx inkscape drawing glabels audacious -y
+wget https://raw.githubusercontent.com/elizeubarbosaabreu/instalar-ubuntu-smartphone-termux/main/installers.sh && chmod +x installers.sh && ./installers.sh
 ```
 ## Adicionando temas
 
