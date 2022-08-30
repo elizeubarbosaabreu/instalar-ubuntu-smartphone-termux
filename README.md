@@ -55,7 +55,7 @@ exit
 
 ### Iniciar o VNC SERVER para acessar o ambiente remotamente
 
-On Ubuntu, run this command to start VNC Server:
+Após iniciar o Ubuntu rode o comando abaixo para iniciar o VNC Server:
 
 ```bash
 vncserver-start
